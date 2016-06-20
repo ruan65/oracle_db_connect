@@ -1,7 +1,7 @@
 package sys.red.atomic;
 
 import oracle.jdbc.pool.OracleDataSource;
-import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -9,20 +9,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+@Component
 public class DbQueriesExecutor {
 
     private OracleDataSource ods;
 
     public DbQueriesExecutor() {
+
         try {
-            this.ods = (OracleDataSource) dataSource();
+            this.ods = (OracleDataSource) createDataSource();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    @Bean
-    DataSource dataSource() throws SQLException {
+    private DataSource createDataSource() throws SQLException {
 
         OracleDataSource dataSource = new OracleDataSource();
 
@@ -35,11 +36,6 @@ public class DbQueriesExecutor {
         return dataSource;
     }
 
-    public OracleDataSource getOds() {
-        return ods;
-    }
-
-
     public ResultSet runRawSqlQuery(String query) {
 
         ResultSet res = null;
@@ -50,10 +46,6 @@ public class DbQueriesExecutor {
             Statement statement = conn.createStatement();
 
             res = statement.executeQuery(query);
-
-//            if (!conn.isClosed()) {
-//                conn.close();
-//            }
 
         } catch (SQLException e) {
             e.printStackTrace();
