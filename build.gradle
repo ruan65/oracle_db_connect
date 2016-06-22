@@ -29,6 +29,9 @@ repositories {
 
 dependencies {
     compile 'com.oracle:ojdbc7:12.1.0.1'
+
+    compile 'com.ibm.maximo:maximo-restclient:1.0'
+
 	compile('org.springframework.boot:spring-boot-starter-web')
     compile("org.springframework.boot:spring-boot-starter-actuator")
 	testCompile('org.springframework.boot:spring-boot-starter-test') 
